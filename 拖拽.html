@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.box{
+				width:100px;
+				height:100px;
+				background: red;
+				position: absolute;
+				top:0;
+				left:0;
+			}
+			.box1{
+				width:100px;
+				height:100px;
+				background: green;
+				position: absolute;
+				top:0;
+				left:0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box" class="box"></div>
+		<div id="box1" class="box1"></div>
+		<script type="text/javascript">
+//			var box = document.getElementById('box');
+//			box.onmousedown = function(ev){
+//				var x = ev.pageX - box.offsetLeft;
+//				var y = ev.pageY - box.offsetTop;
+//
+//				document.onmousemove = function(ev){
+//					var disx = ev.pageX - x;
+//					var disy = ev.pageY - y;
+//					
+//					box.style.left = disx + 'px';
+//					box.style.top = disy + 'px';
+//				}
+//				
+//				document.onmouseup = function(){
+//					document.onmousemove = null;
+//					document.onmouseup = null;
+//				}
+//				
+//			}
+			
+			function Darg(id){
+				this.element = document.getElementById(id);
+				var that = this;
+				this.x = null;
+				this.y = null;
+				this.element.onmousedown = function(ev){
+					that.down(ev,that);
+				}
+			}
+			
+			Darg.prototype.down = function(ev,that){
+				this.x = ev.pageX - this.element.offsetLeft;
+				this.y = ev.pageY - this.element.offsetTop;
+				
+				document.onmousemove = function(ev){
+					that.move(ev);
+				}
+				document.onmouseup = function(){
+					document.onmousemove = null;
+					document.onmouseup = null;
+				}
+			}
+			
+			Darg.prototype.move = function(ev){
+				this.element.style.left = ev.pageX - this.x + 'px';
+				this.element.style.top = ev.pageY - this.y + 'px';
+			}
+			
+			
+			
+			
+			var t = new Darg('box');
+			var t1 = new Darg('box1');
+		</script>
+	</body>
+</html>
