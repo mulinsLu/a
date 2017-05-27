@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script type="text/javascript" src="js/sizzle.js"></script>
+		<title></title>
+		<style type="text/css">
+			li{
+				height:30px;
+				border:1px solid red;
+			}
+			.box{
+				background: green;
+			}
+		</style>
+	</head>
+	<body>
+		
+		<ul>
+			<li>111</li>
+			<li class="ll">222</li>
+			<li>333</li>
+			<li>444</li>
+		</ul>
+		<script type="text/javascript">
+		//Sizzle是一个纯JavaScript CSS选择器引擎,jq基于Sizzle
+			(function(Sizzle){
+				
+				function Fz(name){
+					this.name = Sizzle(name);
+					
+					
+				}
+				
+				Fz.prototype.size = function(){
+					return this.name.length;
+				}
+				
+				Fz.prototype.css = function(attr,value){
+					for(var i=0;i<this.name.length;i++){
+						this.name[i].style[attr] = value;
+					}
+					return this;
+				}
+				
+				Fz.prototype.addClass = function(className){
+					for(var i=0;i<this.name.length;i++){
+						this.name[i].className = className;	
+					}
+					return this;
+				}
+				
+				Fz.prototype.each = function(f){
+					for(var i=0;i<this.name.length;i++){
+						f(this.name[i],i);
+					}
+					return this;
+				}
+				
+				Fz.prototype.eq = function(num){
+					for(var i=0;i<this.name.length;i++){
+						if(i == num){
+							this.name = [this.name[i]];
+						}
+					}
+					return this;
+				}
+				
+				
+				window.$ = window.jquery = function(name){
+					return new Fz(name);
+				}
+				
+			})(Sizzle);
+			
+			
+			
+			
+//			var num = $('li').addClass('box');
+//			$('li').each(function(ele,i){
+//				console.log(ele,i);
+//			})
+			//console.log(num)
+			var box = $('li').eq(0).css('background','red');
+			console.log(box);
+		</script>
+	</body>
+</html>
